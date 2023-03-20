@@ -227,10 +227,6 @@ StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 	arg obj;
 	~numFrequency.value_(obj.value.linlin(0,1,0,250));
 	~granSynth.set(\grainfreq , obj.value.linlin(0,1,0,250));
-})
-.mouseUpAction_({
-	~granSynth.free;
-	~reset.play;
 });
 StaticText.new(~w, Rect(235.5,393,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
 
@@ -241,10 +237,6 @@ StaticText.new(~w, Rect(235.5,393,80,20)).string_("Frequency").font_(Font(["Helv
 	arg obj;
 	~numDuration.value_(obj.value.linlin(0.00,1.00,0.00,1));
 	~granSynth.set(\graindur , obj.value.linlin(0,1,0,1));
-})
-.mouseUpAction_({
-	~granSynth.free;
-	~reset.play;
 });
 StaticText.new(~w, Rect(459.5,393,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
 
@@ -256,13 +248,9 @@ StaticText.new(~w, Rect(459.5,393,80,20)).align_(\center).string_("Duration").fo
 	~numRandomize.value_(obj.value.linlin(0,1,0,100));
 	~granSynth.set(\grainrand , obj.value);
 
-})
-.mouseUpAction_({
-	~granSynth.free;
-	~reset.play;
 });
 
-StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Randomize").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
 
 //numboxes
 ~numVolume = NumberBox.new(~w, Rect(509,31,38,28))

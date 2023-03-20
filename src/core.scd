@@ -30,16 +30,16 @@ SynthDef(\grain_synth, {
 					Impulse.kr(freq: grainfreq),
 					dur: graindur,
 					in: PitchShift.ar(
-						in: gain1*(0.5/(grainfreq+250*graindur))*BufRd.ar(1, sample1,
-							Phasor.ar(0, BufRateScale.ir(sample1)+grainrand*LFNoise1.kr(0.01).range(0,1),
-								grainrand*LFNoise1.kr(0.01).range(0,1), BufFrames.ir(sample1),0)),
+						in: gain1*(0.5/(grainfreq+200*graindur))*BufRd.ar(1, sample1,
+							Phasor.ar(0, BufRateScale.ir(sample1)+grainrand*LFNoise1.kr(1000).range(0,1),
+								0, BufFrames.ir(sample1),0)),
 						windowSize: 1,
 						pitchRatio: ratio1 )
 					+
 					PitchShift.ar(
-						in: gain2*(0.5/(grainfreq+250*graindur))*BufRd.ar(1, sample2,
-							Phasor.ar(0, BufRateScale.ir(sample2)+grainrand*LFNoise1.kr(0.01).range(0,1),
-								grainrand*LFNoise1.kr(0.01).range(0,1), BufFrames.ir(sample2),0),),
+						in: gain2*(0.5/(grainfreq+200*graindur))*BufRd.ar(1, sample2,
+							Phasor.ar(0, BufRateScale.ir(sample2)+grainrand*LFNoise1.kr(1000).range(0,1),
+								0, BufFrames.ir(sample2),0),),
 						windowSize: 1,
 						pitchRatio: ratio2),
 					maxGrains: maxGrains,
@@ -48,7 +48,7 @@ SynthDef(\grain_synth, {
 				windowSize: 0.2,
 				pitchRatio: pitch_ratio
 			),
-			level=5/6;
+			level=4/5;
 		)
 		}).add;
 /*
