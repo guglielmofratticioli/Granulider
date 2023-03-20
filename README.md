@@ -10,4 +10,15 @@ open in supercollider file
 src/main.scd
 ```
 
-higlight all and run in 
+higlight all and run it 
+
+
+# how to use it 
+
+- click START/STOP to ear sounds 
+- click on buttons to swap samples 
+- adjust Volume/pitch of each samples or whole mix 
+- adjust grain frequency with Knob
+- adjust grain duration with knob 
+- adjust grain Speed with Knob
+
