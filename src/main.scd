@@ -1,4 +1,4 @@
-~project_dir = "/Users/guglielmofratticioli/Documents/POLIMI/CMLS/Granulider/";
+~project_dir = thisProcess.nowExecutingPath.dirname.dirname;
 ~ui_path = ~project_dir +/+ "src/gui.scd";
 ~core_path = ~project_dir +/+ "src/core.scd";
 
