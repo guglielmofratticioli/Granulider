@@ -17,7 +17,7 @@ higlight all and run it
 
 - click START/STOP to ear sounds 
 - click on buttons to swap samples 
-- adjust Volume/pitch of each samples or whole mix 
+- adjust Volume/pitch of each samples, whole sound
 - adjust grain frequency with Knob
 - adjust grain duration with knob 
 - adjust grain Speed with Knob
