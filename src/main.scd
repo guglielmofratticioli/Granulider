@@ -1,39 +1,29 @@
-s.boot;
+~project_dir = "/Users/guglielmofratticioli/Documents/POLIMI/CMLS/Granulider/";
+~ui_path = ~project_dir +/+ "src/gui.scd";
+~core_path = ~project_dir +/+ "src/core.scd";
 
-(
-var winenv;
-// a custom envelope
-winenv = Env([0, 1, 0], [0.5, 0.5], [8, -8]);
-z = Buffer.sendCollection(s, winenv.discretize, 1);
-
-~sampleBuffer = Buffer.read(s,'/Users/guglielmofratticioli/Documents/POLIMI/CMLS/Granulider/res/samples/Chord Drop.wav');
-~sampleBuffer.plot
-SynthDef(\in_grain_test, { |out, gate = 1, amp = 1, envbuf|
-    var pan, env, freq, dur, start;
-    // GRANULAR PARAMETERS TO CONTROL
-    pan = 0;
-    env = EnvGen.kr(Env([0, 1, 0], [1, 1], \sin, 1), gate, levelScale: amp, doneAction: Done.freeSelf);
-	freq = 80;
-	dur = 0.020;
-    // TODO start control? Stereo grains?
-    Out.ar(out,
-		GrainIn.ar(2, Impulse.kr(freq: freq), dur, BufRd.ar(1, ~sampleBuffer,
-			Phasor.ar(0, BufRateScale.ir(~sampleBuffer), 0, BufFrames.ir(~sampleBuffer))),
-		pan, envbuf) * env)
-	    // randomize Phasor to change start position ?
-}).add;
+// 13 samples
+~bikeGears= Buffer.read(s,~project_dir +/+ 'res/samples/Bike Gears.wav');
+~bloopyNooper= Buffer.read(s,~project_dir +/+ 'res/samples/Bloopy Nooper.wav');
+~brokenPottery= Buffer.read(s,~project_dir +/+ 'res/samples/Broken Pottery.wav');
+~chordDrop= Buffer.read(s,~project_dir +/+ 'res/samples/Chord Drop.wav');
+~geigerKalimba= Buffer.read(s,~project_dir +/+ 'res/samples/Geiger Kalimba.wav');
+~harshFeedback= Buffer.read(s,~project_dir +/+ 'res/samples/Harsh Feedback.wav');
+~harshGesture= Buffer.read(s,~project_dir +/+ 'res/samples/Harsh Gesture.wav');
+~hullBreach= Buffer.read(s,~project_dir +/+ 'res/samples/Hull Breach.wav');
+~lofiCut= Buffer.read(s,~project_dir +/+ 'res/samples/Lofi-cut.wav');
+~lowFormant= Buffer.read(s,~project_dir +/+ 'res/samples/Low Formanted.wav');
+~octavedVoices= Buffer.read(s,~project_dir +/+ 'res/samples/Octaved Voices.wav');
+~pebbleRain= Buffer.read(s,~project_dir +/+ 'res/samples/Pebble Rain.wav');
+~supermarket= Buffer.read(s,~project_dir +/+ 'res/samples/Supermarket Robot.wav');
 
 
-// use built-in env
-x = Synth(\in_grain_test, [\envbuf, -1])
+~core_path.load;
 
-// switch to the custom env
-x.set(\envbuf, z)
-
-x.set(\envbuf, -1);
-
-x.set(\gate, 0);
-
-b = Buffer.alloc(s,SampleRate)
+~ui_path.load;
 
 
+
+// create an instance of the sine oscillator
+//~synth = Synth(\mySynth);
+//~synth.set(\freq,200)
