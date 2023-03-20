@@ -177,9 +177,9 @@ StaticText.new(~slid5, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 StaticText.new(~slid6, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 
 //envelope
-StaticText.new(~w,Rect(460,150,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
+StaticText.new(~w,Rect(460,393,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
 
-~slid7 = Slider.new(~w, Rect(100,210,130,30))
+~slid7 = Slider.new(~w, Rect(100,450,130,30))
 .value_(0)
 .background_(white)
 .thumbSize_(2)
@@ -189,7 +189,7 @@ StaticText.new(~w,Rect(460,150,80,30)).string_("Envelope").stringColor_(black).f
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
-~slid8 = Slider.new(~w, Rect(320,210,130,30))
+~slid8 = Slider.new(~w, Rect(320,450,130,30))
 .value_(0)
 .background_(white)
 .thumbSize_(2)
@@ -199,7 +199,7 @@ StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 });
 StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 
-~slid9 = Slider.new(~w, Rect(530,210,130,30))
+~slid9 = Slider.new(~w, Rect(530,450,130,30))
 .value_(1)
 .background_(white)
 .thumbSize_(2)
@@ -209,7 +209,7 @@ StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 
-~slid10 = Slider.new(~w, Rect(740,210,130,30))
+~slid10 = Slider.new(~w, Rect(740,450,130,30))
 .value_(0)
 .background_(white)
 .thumbSize_(2)
@@ -220,7 +220,7 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
 //knobs
-~knob1 = Knob.new(~w, Rect(226.5,270,80,80))
+~knob1 = Knob.new(~w, Rect(226.5,520,80,80))
 .background_(white)
 .color_([white,lightsky,white,lightsky])
 .action_({
@@ -228,9 +228,9 @@ StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 	~numFrequency.value_(obj.value.linlin(0,1,0,250));
 	~granSynth.set(\grainfreq , obj.value.linlin(0,1,0,250));
 });
-StaticText.new(~w, Rect(235.5,393,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(235.5,636,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob2 = Knob.new(~w, Rect(459.5,270,80,80))
+~knob2 = Knob.new(~w, Rect(459.5,520,80,80))
 .background_(lightsky)
 .color_([lightsky,lightsky,white,white])
 .action_({
@@ -238,9 +238,9 @@ StaticText.new(~w, Rect(235.5,393,80,20)).string_("Frequency").font_(Font(["Helv
 	~numDuration.value_(obj.value.linlin(0.00,1.00,0.00,1));
 	~granSynth.set(\graindur , obj.value.linlin(0,1,0,1));
 });
-StaticText.new(~w, Rect(459.5,393,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(459.5,636,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob3 = Knob.new(~w, Rect(692.5,270,80,80))
+~knob3 = Knob.new(~w, Rect(692.5,520,80,80))
 .background_(navy)
 .color_([navy,navy,white,white])
 .action_({
@@ -250,7 +250,7 @@ StaticText.new(~w, Rect(459.5,393,80,20)).align_(\center).string_("Duration").fo
 
 });
 
-StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
 
 //numboxes
 ~numVolume = NumberBox.new(~w, Rect(509,31,38,28))
@@ -301,35 +301,35 @@ StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numAttack = NumberBox.new(~w, Rect(229,211,38,28))
+~numAttack = NumberBox.new(~w, Rect(229,450,38,28))
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
 .scroll_step_(0);
 
-~numDecay = NumberBox.new(~w, Rect(449,211,38,28))
+~numDecay = NumberBox.new(~w, Rect(449,450,38,28))
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
 .scroll_step_(0);
 
-~numSustain = NumberBox.new(~w, Rect(659,211,38,28))
+~numSustain = NumberBox.new(~w, Rect(659,450,38,28))
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
 .scroll_step_(0);
 
-~numRelease = NumberBox.new(~w, Rect(869,211,38,28))
+~numRelease = NumberBox.new(~w, Rect(869,450,38,28))
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
 .scroll_step_(0);
 
-~numFrequency = NumberBox.new(~w, Rect(251.5,355,38,28))
+~numFrequency = NumberBox.new(~w, Rect(251.5,605,38,28))
 .value_(1)
 .decimals_(0)
 .background_(white)
@@ -337,7 +337,7 @@ StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numDuration = NumberBox.new(~w, Rect(485,355,44,28))
+~numDuration = NumberBox.new(~w, Rect(485,605,44,28))
 .value_(0.25)
 .decimals_(3)
 .background_(lightsky)
@@ -345,7 +345,7 @@ StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numRandomize = NumberBox.new(~w, Rect(720,355,38,28))
+~numRandomize = NumberBox.new(~w, Rect(720,605,38,28))
 .value_(0)
 .decimals_(0)
 .background_(navy)
@@ -354,7 +354,8 @@ StaticText.new(~w, Rect(685.5,393,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 //stethscope
-~scope = ScopeView.new(~w, Rect(300, 460, 400, 200)).background_(lightsky);  //non sono sicura su questo, bisogna aggiungere anche ScopeOut2
+~scope1 = ScopeView.new(~w, Rect(75, 160, 393, 200)).background_(lightsky);  //non sono sicura su questo, bisogna aggiungere anche ScopeOut2
+~scope2 = ScopeView.new(~w, Rect(515, 160, 393, 200)).background_(lightsky);
 
 ~w.front;
 
