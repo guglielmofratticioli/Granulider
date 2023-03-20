@@ -1,4 +1,3 @@
-~randSize = 50000;
 SynthDef(\grain_synth, {
 	|
 	sample1,
@@ -9,62 +8,51 @@ SynthDef(\grain_synth, {
 	pitch2 = 0,
 	volume = 1,
 	pitch = 0,
-	pan = 0,
-	out,
-	maxGrains = 512,
-	grainenv = -1,
-	grainfreq = 80,
-	graindur = 0.020,
-	grainrand = 0
+	pan = 0, //non è dentro l'interfaccia
+	out,    //output del sistema
+	maxGrains = 512,  //numero suoni (grani) max in contemporanea
+	grainenv = -1,    //forma envelope  triangolo
+	grainfreq = 80,   //ogni quanto vengono presi i grani dal file somma dei due file audio
+	graindur = 0.020, // durata grani
+	grainrand = 0     // in teoria dovrebbe randomizzare la selezione dei grani, vorremmo ottenerlo non in successione temporale, in percentuale
+
 	|
-	        var pitch_ratio = midiratio(pitch);
-	        var ratio1 = midiratio(pitch1);
+	        var pitch_ratio = midiratio(pitch);  // fa in automatico la suddivisone frequenze da semitoni a hz
+	        var ratio1 = midiratio(pitch1);      //di quanto shiftare la frequenza del segnale singolo
 	        var ratio2 = midiratio(pitch2);
 			// TODO start control? Stereo grains?
 		    // randomize Phasor to change start position ?
-			Out.ar(out,
-		Limiter.ar(
-			in:
-			PitchShift.ar(
-				in: volume*GrainIn.ar(2,
-					Impulse.kr(freq: grainfreq),
-					dur: graindur,
-					in: PitchShift.ar(
-						in: gain1*0.5*BufRd.ar(1, sample1,
-							Phasor.ar(0, BufRateScale.ir(sample1)+grainrand*LFNoise1.kr(1).range(0,1),
-								0, BufFrames.ir(sample1),0)),
-						windowSize: 1,
-						pitchRatio: ratio1 )
-					+
-					PitchShift.ar(
-						in: gain2*0.5*BufRd.ar(1, sample2,
-							Phasor.ar(0, BufRateScale.ir(sample2)+grainrand*LFNoise1.kr(1).range(0,1),
-								0, BufFrames.ir(sample2),0),),
-						windowSize: 1,
-						pitchRatio: ratio2),
-					maxGrains: maxGrains,
-					pan: 0,
-					envbufnum: grainenv),// *env),
-				windowSize: 1,
-				pitchRatio: pitch_ratio
-			),
-			level: 4/5;
+			Out.ar(bus: out,
+		         channelsArray:          // in input nel bus metto il channel Limiter come uscita audio
+		            Limiter.ar(          //limita il volume tot in % in base se supera i $/5 del limite (level 4/5)
+		         	in: PitchShift.ar(  // per entrambi i suoni, che vengono sommati
+				in: GrainIn.ar(2,   // 2 canali (stereo)
+		         			Impulse.kr(freq: grainfreq),  //   segnale di clock per il granulizer
+		         			dur: graindur,                // durata di ogni grain
+		         			in: PitchShift.ar(            // SAMPLE 1
+		         				in: BufRd.ar(2, sample1,  // BufRd trasforma vettore di numeri in audio
+		         					    Phasor.ar(0, BufRateScale.ir(sample1),
+				         				0, BufFrames.ir(sample1),
+								0)),
+						         windowSize: 1,
+						         pitchRatio: ratio1 )
+					             +
+					             PitchShift.ar(            // SAMPLE 2
+								         0,
+								         BufFrames.ir(sample2) ,
+						maxGrains: maxGrains,
+		         			pan: 0,
+				         	envbufnum: grainenv)*volume,  //
+         				windowSize: 1,
+		         		pitchRatio: pitch_ratio),
+			       level: 4/5;)
 	))
-		}).add;
-/*
-
-c = {
-	arg project_dir = "/Users/guglielmofratticioli/Documents/POLIMI/CMLS/Granulider/",
-	winenv = Env([0,1,0], [0.5,0.5], [8, -8]);
-	{
-		z = Buffer.sendCollection(s, winenv.discretize, 1);
-		~sampleBuffer = Buffer.read(s,project_dir +/+ 'res/samples/Chord Drop.wav');
-		//~sampleBuffer.plot;
-		x = Synth(\in_grain_test, [\envbuf, -1])
-	}
-
-}
-
+}).add;
+/*						         in: BufRd.ar(2, sample2,  //
+							             Phasor.ar(0, BufRateScale.ir(sample2),
+			0)),
+						         windowSize: 1,
+						         pitchRatio: ratio2),
 
 x = Synth(\in_grain_test, [\envbuf, -1])
 
