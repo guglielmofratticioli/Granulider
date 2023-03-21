@@ -36,8 +36,8 @@ var black = Color.fromHexString("#000000");
 .background_(navy)
 .action_({
 	if ( ~start.value == 0 ,
-		{ postln("Stopped"); ~granSynth.free; }
-		,{postln("Started"); ~reset.play });
+		{ postln("Stopped"); ~granSynth.free; ~reset; }
+		,{ postln("Started"); ~reset.play });
 });
 
 ~slid1 = Slider.new(~w,Rect(390,30,120,30))
@@ -246,7 +246,7 @@ StaticText.new(~w, Rect(459.5,636,80,20)).align_(\center).string_("Duration").fo
 .action_({
 	arg obj;
 	~numRandomize.value_(obj.value.linlin(0,1,0,100));
-	~granSynth.set(\grainrand , obj.value);
+	~granSynth.set(\grainrand , obj.value/100);
 
 });
 

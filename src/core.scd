@@ -25,28 +25,30 @@ SynthDef(\grain_synth, {
 			Out.ar(bus: out,
 		         channelsArray:          // in input nel bus metto il channel Limiter come uscita audio
 		            Limiter.ar(          //limita il volume tot in % in base se supera i $/5 del limite (level 4/5)
-		         	in: PitchShift.ar(  // per entrambi i suoni, che vengono sommati
-				in: GrainIn.ar(2,   // 2 canali (stereo)
-		         			Impulse.kr(freq: grainfreq),  //   segnale di clock per il granulizer
-		         			dur: graindur,                // durata di ogni grain
-		         			in: PitchShift.ar(            // SAMPLE 1
-		         				in: BufRd.ar(2, sample1,  // BufRd trasforma vettore di numeri in audio
-		         					    Phasor.ar(0, BufRateScale.ir(sample1),
-				         				0, BufFrames.ir(sample1),
-								0)),
-						         windowSize: 1,
-						         pitchRatio: ratio1 )
-					             +
-					             PitchShift.ar(            // SAMPLE 2
-								         0,
-								         BufFrames.ir(sample2) ,
-						maxGrains: maxGrains,
+		         	in: PitchShift.ar(                    // per entrambi i suoni, che vengono sommati
+				            in: GrainIn.ar(2,                         // 2 canali (stereo)
+		         				Impulse.kr(freq: grainfreq),  //   segnale di clock per il granulizer
+		         				dur: graindur,                // durata di ogni grain
+		         				in: PitchShift.ar(            // SAMPLE 1
+		         					in: BufRd.ar(1, sample1,  // BufRd trasforma vettore di numeri in audio
+		         						    Phasor.ar(0, BufRateScale.ir(sample1),
+								            0, BufFrames.ir(sample1),0))*gain1,
+						    	     windowSize: 1,
+						             pitchRatio: ratio1 + grainrand*Rand.new(0,2) )
+					       	         +
+					       	         PitchShift.ar(            // SAMPLE 1
+		         					 in: BufRd.ar(1, sample2,  // BufRd trasforma vettore di numeri in audio
+		         						    Phasor.ar(0, BufRateScale.ir(sample2),
+									        0, BufFrames.ir(sample2),0))*gain2,
+						     	    windowSize: 1,
+						            pitchRatio: ratio2 + grainrand*Rand.new(0,2) ),
+			                maxGrains: maxGrains,
 		         			pan: 0,
 				         	envbufnum: grainenv)*volume,  //
          				windowSize: 1,
 		         		pitchRatio: pitch_ratio),
 			       level: 4/5;)
-	))
+	      )
 }).add;
 /*						         in: BufRd.ar(2, sample2,  //
 							             Phasor.ar(0, BufRateScale.ir(sample2),

@@ -17,12 +17,9 @@
 ~pebbleRain= Buffer.read(s,~project_dir +/+ 'res/samples/Pebble Rain.wav');
 ~supermarket= Buffer.read(s,~project_dir +/+ 'res/samples/Supermarket Robot.wav');
 
-
 ~core_path.load;
 
 ~ui_path.load;
-
-
 
 // create an instance of the sine oscillator
 //~synth = Synth(\mySynth);
