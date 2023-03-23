@@ -247,6 +247,8 @@ StaticText.new(~w, Rect(459.5,636,80,20)).align_(\center).string_("Duration").fo
 	arg obj;
 	~numRandomize.value_(obj.value.linlin(0,1,0,100));
 	~granSynth.set(\grainrand , obj.value/100);
+	~granSynth.run(false);
+	~granSynth.run;
 
 });
 
