@@ -14,7 +14,8 @@ SynthDef(\grain_synth, {
 	grainenv = -1,    //forma envelope  triangolo
 	grainfreq = 80,   //ogni quanto vengono presi i grani dal file somma dei due file audio
 	graindur = 0.020, // durata grani
-	grainrand = 0     // in teoria dovrebbe randomizzare la selezione dei grani, vorremmo ottenerlo non in successione temporale, in percentuale
+	grainrand = 0,     // in teoria dovrebbe randomizzare la selezione dei grani, vorremmo ottenerlo non in successione temporale, in percentuale
+	envelope //set by GUI when created
 
 	|
 	        var pitch_ratio = midiratio(pitch);  // fa in automatico la suddivisone frequenze da semitoni a hz

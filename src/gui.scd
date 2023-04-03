@@ -11,6 +11,41 @@ var black = Color.fromHexString("#000000");
 
 ~sample1 = ~supermarket;
 ~sample2 = ~bikeGears;
+
+//preset for envelope (valid also for GUI)
+//at the end of the page, this variables are substitude with num boxes and they automatically take this values
+~numAttack = 0.1;
+~numDecay = 0.2;
+~numRelease = 0.2;
+~numSustain = 0.5;
+
+~numAttack.value();
+
+~globEnv = EnvGen.kr(
+        Env(
+			levels: [0, 1, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numDecay.value(), ~numRelease.value()],
+            curve: 8
+        ),
+		gate: Impulse.kr(1/(~numAttack.value()+~numDecay.value()+~numRelease.value()))
+);
+
+
+/*
+//TO PLOT GLOBAL ENVELOPE
+{~globEnv = EnvGen.kr(
+        Env(
+			levels: [0, 1, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numDecay.value(), ~numRelease.value()],
+            curve: 8
+        ),
+		gate: Impulse.kr(1/(~numAttack.value()+~numDecay.value()+~numRelease.value()))
+)}.plot(1);
+
+*/
+
+
+
 ~reset = {
 	~granSynth = Synth.new(\grain_synth, [
 			\sample1,~sample1,
@@ -23,7 +58,8 @@ var black = Color.fromHexString("#000000");
 			\pitch2,~numPitch2.value(),
 			\grainfreq, ~numFrequency.value(),
 			\graindur,~numDuration.value(),
-			\grainrand, ~numRandomize.value()/100
+			\grainrand, ~numRandomize.value()/100,
+			//\envelope, ~globEnv
 
 	]);
 };
@@ -180,42 +216,47 @@ StaticText.new(~slid6, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 StaticText.new(~w,Rect(460,393,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
 
 ~slid7 = Slider.new(~w, Rect(100,450,130,30))
-.value_(0)
+.value_(~numAttack.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
 	arg obj;
-	~numAttack.value_(obj.value.linlin(0.00,1.00,0,200))
+	~numAttack.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
+	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
 ~slid8 = Slider.new(~w, Rect(320,450,130,30))
-.value_(0)
+.value_(~numDecay.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
 	arg obj;
-	~numDecay.value_(obj.value.linlin(0.00,1.00,0,200))
+	~numDecay.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
+	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
 });
 StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 
 ~slid9 = Slider.new(~w, Rect(530,450,130,30))
-.value_(1)
+.value_(~numSustain.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
 	arg obj;
-	~numSustain.value_(obj.value.linlin(0.00,1.00,0.00,1.00))
+	~numSustain.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
+	~globEnv.set(\levels, [0,1,~numSustain.value(),0])
+
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 
 ~slid10 = Slider.new(~w, Rect(740,450,130,30))
-.value_(0)
+.value_(~numRelease.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
 	arg obj;
-	~numRelease.value_(obj.value.linlin(0,1,0,500))
+	~numRelease.value_(obj.value.linlin(0,1,0.00,1.00));
+	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
 });
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
@@ -304,32 +345,36 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numAttack = NumberBox.new(~w, Rect(229,450,38,28))
-.decimals_(0)
+.decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
-.scroll_step_(0);
+.scroll_step_(0)
+.value_(~numAttack.value());
 
 ~numDecay = NumberBox.new(~w, Rect(449,450,38,28))
-.decimals_(0)
+.decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
-.scroll_step_(0);
+.scroll_step_(0)
+.value_(~numDecay.value());
 
 ~numSustain = NumberBox.new(~w, Rect(659,450,38,28))
-.decimals_(0)
+.decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
-.scroll_step_(0);
+.scroll_step_(0)
+.value_(~numSustain.value());
 
 ~numRelease = NumberBox.new(~w, Rect(869,450,38,28))
-.decimals_(0)
+.decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
 .align_(\center)
-.scroll_step_(0);
+.scroll_step_(0)
+.value_(~numRelease.value());
 
 ~numFrequency = NumberBox.new(~w, Rect(251.5,605,38,28))
 .value_(1)

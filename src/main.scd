@@ -1,3 +1,5 @@
+s.boot;
+
 ~project_dir = thisProcess.nowExecutingPath.dirname.dirname;
 ~ui_path = ~project_dir +/+ "src/gui.scd";
 ~core_path = ~project_dir +/+ "src/core.scd";
