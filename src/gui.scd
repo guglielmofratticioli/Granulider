@@ -60,7 +60,6 @@ var black = Color.fromHexString("#000000");
 			\graindur,~numDuration.value(),
 			\grainrand, ~numRandomize.value()/100,
 			//\envelope, ~globEnv
-
 	]);
 };
 
