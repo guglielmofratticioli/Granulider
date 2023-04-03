@@ -1,4 +1,4 @@
-# A SuperCollider sample based 
+# A SuperCollider Grain Synth sample based 
 for CMLS project 2023 
 # How  to run it 
 clone it with : 
