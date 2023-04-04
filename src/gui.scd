@@ -19,6 +19,18 @@ var black = Color.fromHexString("#000000");
 ~numSustain = 0.5;
 
 
+//initialize parameters
+~numDuration = 0.25;
+~numFrequency = 1;
+~numPitch = 0;
+~numPitch1 = 0;
+~numPitch2 = 0;
+~numVolume = 1;
+~numVol1 = 1;
+~numVol2 = 1;
+~numRandomize = 0;
+
+
 ~winenv = Env(
 			levels: [0, ~numSustain.value(), 0],
 		times: [~numAttack.value(), ~numRelease.value()],
@@ -26,7 +38,7 @@ var black = Color.fromHexString("#000000");
 
 ~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 
-{EnvGen.kr(~winenv)}.plot(2);
+//{EnvGen.kr(~winenv)}.plot(2);
 
 ~reset = {
 	if ( ~start.value == 0 ,
@@ -66,7 +78,7 @@ var black = Color.fromHexString("#000000");
 });
 
 ~slid1 = Slider.new(~w,Rect(390,60,120,30))
-.value_(1)
+.value_(~numVolume.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
@@ -77,13 +89,13 @@ var black = Color.fromHexString("#000000");
 StaticText.new(~slid1, Rect(10,0,80,30)).string_("Volume").stringColor_(navy);
 
 ~slid2 = Slider.new(~w,Rect(560,60,120,30))
-.value_(0.5)
+.value_(~numPitch.value().linlin(-12,12,0,1))
 .background_(white)
 .thumbSize_(2)
 .action_({
 	arg obj;
 	~numPitch.value_(obj.value.linlin(0,1,-12,12));
-	~granSynth.set(\pitch , obj.value);
+	~granSynth.set(\pitch , obj.value.linlin(0,1,-12,12));
 });
 StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 
@@ -123,7 +135,7 @@ StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 });
 
 ~slid3 = Slider.new(~w, Rect(190,140,100,30))
-.value_(1)
+.value_(~numVol1.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
@@ -134,7 +146,7 @@ StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 StaticText.new(~slid3, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 
 ~slid4 = Slider.new(~w, Rect(340,140,100,30))
-.value_(0.5)
+.value_(~numPitch1.value().linlin(-12,12,0,1))
 .background_(white)
 .thumbSize_(2)
 .action_({
@@ -180,7 +192,7 @@ StaticText.new(~slid4, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 });
 
 ~slid5 = Slider.new(~w, Rect(630,140,100,30))
-.value_(1)
+.value_(~numVol2.value())
 .background_(white)
 .thumbSize_(2)
 .action_({
@@ -191,7 +203,7 @@ StaticText.new(~slid4, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 StaticText.new(~slid5, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 
 ~slid6 = Slider.new(~w, Rect(780,140,100,30))
-.value_(0.5)
+.value_(~numPitch2.value().linlin(-12,12,0,1))
 .background_(white)
 .thumbSize_(2)
 .action_({
@@ -216,7 +228,8 @@ StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).f
 		times: [~numAttack.value(), ~numRelease.value()],
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
-	~reset.play;
+	~granSynth.set(\grainenv , ~envBuf);
+	//~reset.play;
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
@@ -245,7 +258,8 @@ StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 		times: [~numAttack.value(), ~numRelease.value()],
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
-	~reset.play;
+	~granSynth.set(\grainenv , ~envBuf);
+	//~reset.play;
 
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
@@ -262,13 +276,15 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 		times: [~numAttack.value(), ~numRelease.value()],
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
-	~reset.play;
+	~granSynth.set(\grainenv , ~envBuf);
+	//~reset.play;
 });
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
 //knobs
 ~knob1 = Knob.new(~w, Rect(226.5,450,80,80))
 .background_(white)
+.value_(~numFrequency.value()/250)
 .color_([white,lightsky,white,lightsky])
 .action_({
 	arg obj;
@@ -279,6 +295,7 @@ StaticText.new(~w, Rect(235.5,566,80,20)).string_("Frequency").font_(Font(["Helv
 
 ~knob2 = Knob.new(~w, Rect(459.5,450,80,80))
 .background_(lightsky)
+.value_(~numDuration.value())
 .color_([lightsky,lightsky,white,white])
 .action_({
 	arg obj;
@@ -289,14 +306,15 @@ StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").fo
 
 ~knob3 = Knob.new(~w, Rect(692.5,450,80,80))
 .background_(navy)
+.value_(~numRandomize.value())
 .color_([navy,navy,white,white])
 .action_({
 	arg obj;
 	~numRandomize.value_(obj.value.linlin(0,1,0,100));
-	~granSynth.set(\grainrand , obj.value/100);
-	~granSynth.run(false);
+	~granSynth.set(\grainrand , obj.value);
+	/*~granSynth.run(false);
 	~granSynth.run;
-	~reset.play;
+	~reset.play;*/
 
 });
 
@@ -312,7 +330,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 
 
 ~numPitch = NumberBox.new(~w, Rect(679,61,38,28))
-.value_(0)
+.value_(~numPitch.value())
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
@@ -320,7 +338,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numVol1 = NumberBox.new(~w, Rect(289,141,39,28))
-.value_(1)
+.value_(~numVol1.value())
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -328,7 +346,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numPitch1 = NumberBox.new(~w, Rect(439,141,38,28))
-.value_(0)
+.value_(~numPitch1.value())
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
@@ -336,7 +354,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numVol2 = NumberBox.new(~w, Rect(729,141,38,28))
-.value_(1)
+.value_(~numVol2.value())
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -344,7 +362,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numPitch2 = NumberBox.new(~w, Rect(879,141,38,28))
-.value_(0)
+.value_(~numPitch2.value())
 .decimals_(0)
 .background_(lightsky)
 .normalColor_(white)
@@ -386,7 +404,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .value_(~numRelease.value());
 
 ~numFrequency = NumberBox.new(~w, Rect(251.5,535,38,28))
-.value_(1)
+.value_(~numFrequency.value())
 .decimals_(0)
 .background_(white)
 .normalColor_(lightsky)
@@ -394,7 +412,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numDuration = NumberBox.new(~w, Rect(485,535,44,28))
-.value_(0.25)
+.value_(~numDuration.value())
 .decimals_(3)
 .background_(lightsky)
 .normalColor_(white)
@@ -402,7 +420,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 ~numRandomize = NumberBox.new(~w, Rect(720,535,38,28))
-.value_(0)
+.value_(~numRandomize.value())
 .decimals_(0)
 .background_(navy)
 .normalColor_(white)

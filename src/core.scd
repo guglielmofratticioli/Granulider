@@ -33,14 +33,14 @@ SynthDef(\grain_synth, {
 		         						    Phasor.ar(0, BufRateScale.ir(sample1),
 								            0, BufFrames.ir(sample1),0))*gain1,
 						    	     windowSize: 1,
-						             pitchRatio: ratio1 + grainrand*Rand.new(0,2) )
+						             pitchRatio: ratio1 + WhiteNoise.ar(grainrand) )
 					       	         +
 					       	         PitchShift.ar(            // SAMPLE 1
 		         					 in: BufRd.ar(1, sample2,  // BufRd trasforma vettore di numeri in audio
 		         						    Phasor.ar(0, BufRateScale.ir(sample2),
 									        0, BufFrames.ir(sample2),0))*gain2,
 						     	    windowSize: 1,
-						            pitchRatio: ratio2 + grainrand*Rand.new(0,2) ),
+							pitchRatio: ratio2 + WhiteNoise.ar(grainrand) ),
 			                maxGrains: maxGrains,
 		         			pan: 0,
 				         	envbufnum: grainenv)*volume,  //
