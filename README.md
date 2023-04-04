@@ -21,4 +21,6 @@ higlight all and run it
 - adjust grain frequency with Knob
 - adjust grain duration with knob 
 - adjust grain Speed with Knob
+- click RECORD to record the sound
+- click STOP REC to stop the recording and save it in the project directory
 
