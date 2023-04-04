@@ -66,7 +66,7 @@ var black = Color.fromHexString("#000000");
 ~w = Window.new("Granullider", Rect(500,500,1000,700)).background_(sky);
 
 // final
-~start = Button.new(~w, Rect(290,30,80,30))
+~start = Button.new(~w, Rect(290,60,80,30))
 .states_([["Start",navy,white],["Stop",navy,sky]])
 .background_(navy)
 .action_({
@@ -75,7 +75,7 @@ var black = Color.fromHexString("#000000");
 		,{ postln("Started"); ~reset.play });
 });
 
-~slid1 = Slider.new(~w,Rect(390,30,120,30))
+~slid1 = Slider.new(~w,Rect(390,60,120,30))
 .value_(1)
 .background_(white)
 .thumbSize_(2)
@@ -86,7 +86,7 @@ var black = Color.fromHexString("#000000");
 });
 StaticText.new(~slid1, Rect(10,0,80,30)).string_("Volume").stringColor_(navy);
 
-~slid2 = Slider.new(~w,Rect(560,30,120,30))
+~slid2 = Slider.new(~w,Rect(560,60,120,30))
 .value_(0.5)
 .background_(white)
 .thumbSize_(2)
@@ -98,7 +98,7 @@ StaticText.new(~slid1, Rect(10,0,80,30)).string_("Volume").stringColor_(navy);
 StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 
 // sound1
-~but1 = Button.new(~w, Rect(65,90,110,30)).states_([
+~but1 = Button.new(~w, Rect(65,140,110,30)).states_([
 		["Bike Gears",navy,white],
 		["Bloopy Nooper",navy,white],
 		["Broken Pottery",navy,white],
@@ -132,7 +132,7 @@ StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 	postln(~sample1);
 });
 
-~slid3 = Slider.new(~w, Rect(190,90,100,30))
+~slid3 = Slider.new(~w, Rect(190,140,100,30))
 .value_(1)
 .background_(white)
 .thumbSize_(2)
@@ -143,7 +143,7 @@ StaticText.new(~slid2, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 });
 StaticText.new(~slid3, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 
-~slid4 = Slider.new(~w, Rect(340,90,100,30))
+~slid4 = Slider.new(~w, Rect(340,140,100,30))
 .value_(0.5)
 .background_(white)
 .thumbSize_(2)
@@ -155,7 +155,7 @@ StaticText.new(~slid3, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 StaticText.new(~slid4, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 
 //sound2
-~but2 = Button.new(~w, Rect(495,90,120,30)).states_([
+~but2 = Button.new(~w, Rect(495,140,120,30)).states_([
 		["Bike Gears",navy,white],
 		["Bloopy Nooper",navy,white],
 		["Broken Pottery",navy,white],
@@ -189,7 +189,7 @@ StaticText.new(~slid4, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 	postln(~sample2);
 });
 
-~slid5 = Slider.new(~w, Rect(630,90,100,30))
+~slid5 = Slider.new(~w, Rect(630,140,100,30))
 .value_(1)
 .background_(white)
 .thumbSize_(2)
@@ -200,7 +200,7 @@ StaticText.new(~slid4, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 });
 StaticText.new(~slid5, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 
-~slid6 = Slider.new(~w, Rect(780,90,100,30))
+~slid6 = Slider.new(~w, Rect(780,140,100,30))
 .value_(0.5)
 .background_(white)
 .thumbSize_(2)
@@ -212,9 +212,9 @@ StaticText.new(~slid5, Rect(10,0,80,30)).string_("Vol.").stringColor_(navy);
 StaticText.new(~slid6, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 
 //envelope
-StaticText.new(~w,Rect(460,393,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
+StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
 
-~slid7 = Slider.new(~w, Rect(100,450,130,30))
+~slid7 = Slider.new(~w, Rect(100,320,130,30))
 .value_(~numAttack.value())
 .background_(white)
 .thumbSize_(2)
@@ -225,7 +225,7 @@ StaticText.new(~w,Rect(460,393,80,30)).string_("Envelope").stringColor_(black).f
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
-~slid8 = Slider.new(~w, Rect(320,450,130,30))
+~slid8 = Slider.new(~w, Rect(320,320,130,30))
 .value_(~numDecay.value())
 .background_(white)
 .thumbSize_(2)
@@ -236,7 +236,7 @@ StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 });
 StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 
-~slid9 = Slider.new(~w, Rect(530,450,130,30))
+~slid9 = Slider.new(~w, Rect(530,320,130,30))
 .value_(~numSustain.value())
 .background_(white)
 .thumbSize_(2)
@@ -248,7 +248,7 @@ StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 
-~slid10 = Slider.new(~w, Rect(740,450,130,30))
+~slid10 = Slider.new(~w, Rect(740,320,130,30))
 .value_(~numRelease.value())
 .background_(white)
 .thumbSize_(2)
@@ -260,7 +260,7 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
 //knobs
-~knob1 = Knob.new(~w, Rect(226.5,520,80,80))
+~knob1 = Knob.new(~w, Rect(226.5,450,80,80))
 .background_(white)
 .color_([white,lightsky,white,lightsky])
 .action_({
@@ -268,9 +268,9 @@ StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 	~numFrequency.value_(obj.value.linlin(0,1,0,250));
 	~granSynth.set(\grainfreq , obj.value.linlin(0,1,0,250));
 });
-StaticText.new(~w, Rect(235.5,636,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(235.5,566,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob2 = Knob.new(~w, Rect(459.5,520,80,80))
+~knob2 = Knob.new(~w, Rect(459.5,450,80,80))
 .background_(lightsky)
 .color_([lightsky,lightsky,white,white])
 .action_({
@@ -278,9 +278,9 @@ StaticText.new(~w, Rect(235.5,636,80,20)).string_("Frequency").font_(Font(["Helv
 	~numDuration.value_(obj.value.linlin(0.00,1.00,0.00,1));
 	~granSynth.set(\graindur , obj.value.linlin(0,1,0,1));
 });
-StaticText.new(~w, Rect(459.5,636,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob3 = Knob.new(~w, Rect(692.5,520,80,80))
+~knob3 = Knob.new(~w, Rect(692.5,450,80,80))
 .background_(navy)
 .color_([navy,navy,white,white])
 .action_({
@@ -292,10 +292,10 @@ StaticText.new(~w, Rect(459.5,636,80,20)).align_(\center).string_("Duration").fo
 
 });
 
-StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
 
 //numboxes
-~numVolume = NumberBox.new(~w, Rect(509,31,38,28))
+~numVolume = NumberBox.new(~w, Rect(509,61,38,28))
 .value_(1)
 .background_(lightsky)
 .normalColor_(white)
@@ -303,7 +303,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0);
 
 
-~numPitch = NumberBox.new(~w, Rect(679,31,38,28))
+~numPitch = NumberBox.new(~w, Rect(679,61,38,28))
 .value_(0)
 .decimals_(0)
 .background_(lightsky)
@@ -311,23 +311,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numVol1 = NumberBox.new(~w, Rect(289,91,39,28))
-.value_(1)
-.decimals_(2)
-.background_(lightsky)
-.normalColor_(white)
-.align_(\center)
-.scroll_step_(0);
-
-~numPitch1 = NumberBox.new(~w, Rect(439,91,38,28))
-.value_(0)
-.decimals_(0)
-.background_(lightsky)
-.normalColor_(white)
-.align_(\center)
-.scroll_step_(0);
-
-~numVol2 = NumberBox.new(~w, Rect(729,91,38,28))
+~numVol1 = NumberBox.new(~w, Rect(289,141,39,28))
 .value_(1)
 .decimals_(2)
 .background_(lightsky)
@@ -335,7 +319,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numPitch2 = NumberBox.new(~w, Rect(879,91,38,28))
+~numPitch1 = NumberBox.new(~w, Rect(439,141,38,28))
 .value_(0)
 .decimals_(0)
 .background_(lightsky)
@@ -343,7 +327,23 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numAttack = NumberBox.new(~w, Rect(229,450,38,28))
+~numVol2 = NumberBox.new(~w, Rect(729,141,38,28))
+.value_(1)
+.decimals_(2)
+.background_(lightsky)
+.normalColor_(white)
+.align_(\center)
+.scroll_step_(0);
+
+~numPitch2 = NumberBox.new(~w, Rect(879,141,38,28))
+.value_(0)
+.decimals_(0)
+.background_(lightsky)
+.normalColor_(white)
+.align_(\center)
+.scroll_step_(0);
+
+~numAttack = NumberBox.new(~w, Rect(229,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -351,7 +351,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numAttack.value());
 
-~numDecay = NumberBox.new(~w, Rect(449,450,38,28))
+~numDecay = NumberBox.new(~w, Rect(449,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -359,7 +359,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numDecay.value());
 
-~numSustain = NumberBox.new(~w, Rect(659,450,38,28))
+~numSustain = NumberBox.new(~w, Rect(659,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -367,7 +367,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numSustain.value());
 
-~numRelease = NumberBox.new(~w, Rect(869,450,38,28))
+~numRelease = NumberBox.new(~w, Rect(869,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -375,7 +375,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numRelease.value());
 
-~numFrequency = NumberBox.new(~w, Rect(251.5,605,38,28))
+~numFrequency = NumberBox.new(~w, Rect(251.5,535,38,28))
 .value_(1)
 .decimals_(0)
 .background_(white)
@@ -383,7 +383,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numDuration = NumberBox.new(~w, Rect(485,605,44,28))
+~numDuration = NumberBox.new(~w, Rect(485,535,44,28))
 .value_(0.25)
 .decimals_(3)
 .background_(lightsky)
@@ -391,7 +391,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numRandomize = NumberBox.new(~w, Rect(720,605,38,28))
+~numRandomize = NumberBox.new(~w, Rect(720,535,38,28))
 .value_(0)
 .decimals_(0)
 .background_(navy)
@@ -399,9 +399,7 @@ StaticText.new(~w, Rect(685.5,636,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-//stethscope
-~scope1 = ScopeView.new(~w, Rect(75, 160, 393, 200)).background_(lightsky);  //non sono sicura su questo, bisogna aggiungere anche ScopeOut2
-~scope2 = ScopeView.new(~w, Rect(515, 160, 393, 200)).background_(lightsky);
+
 
 ~w.front;
 
