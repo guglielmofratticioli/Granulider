@@ -15,39 +15,26 @@ var black = Color.fromHexString("#000000");
 //preset for envelope (valid also for GUI)
 //at the end of the page, this variables are substitude with num boxes and they automatically take this values
 ~numAttack = 0.1;
-~numDecay = 0.2;
 ~numRelease = 0.2;
 ~numSustain = 0.5;
 
-~numAttack.value();
 
-~globEnv = EnvGen.kr(
-        Env(
-			levels: [0, 1, ~numSustain.value(), 0],
-		times: [~numAttack.value(), ~numDecay.value(), ~numRelease.value()],
-            curve: 8
-        ),
-		gate: Impulse.kr(1/(~numAttack.value()+~numDecay.value()+~numRelease.value()))
-);
+~winenv = Env(
+			levels: [0, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numRelease.value()],
+        );
 
+~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 
-/*
-//TO PLOT GLOBAL ENVELOPE
-{~globEnv = EnvGen.kr(
-        Env(
-			levels: [0, 1, ~numSustain.value(), 0],
-		times: [~numAttack.value(), ~numDecay.value(), ~numRelease.value()],
-            curve: 8
-        ),
-		gate: Impulse.kr(1/(~numAttack.value()+~numDecay.value()+~numRelease.value()))
-)}.plot(1);
-
-*/
-
-
+{EnvGen.kr(~winenv)}.plot(2);
 
 ~reset = {
-	~granSynth = Synth.new(\grain_synth, [
+	if ( ~start.value == 0 ,
+		{ postln("Stopped"); ~granSynth.free; ~reset; }
+		,{ postln("Started");
+			{
+			~granSynth.free;
+			~granSynth = Synth.new(\grain_synth, [
 			\sample1,~sample1,
 			\sample2,~sample2,
 			\volume,~numVolume.value(),
@@ -59,8 +46,11 @@ var black = Color.fromHexString("#000000");
 			\grainfreq, ~numFrequency.value(),
 			\graindur,~numDuration.value(),
 			\grainrand, ~numRandomize.value()/100,
-			//\envelope, ~globEnv
-	]);
+			\grainenv, ~envBuf
+			])}.play
+
+		});
+
 };
 
 ~w = Window.new("Granullider", Rect(500,500,1000,700)).background_(sky);
@@ -221,10 +211,16 @@ StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).f
 .action_({
 	arg obj;
 	~numAttack.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
-	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
+	~winenv = Env(
+			levels: [0, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numRelease.value()],
+        );
+	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
+	~reset.play;
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
+/*
 ~slid8 = Slider.new(~w, Rect(320,320,130,30))
 .value_(~numDecay.value())
 .background_(white)
@@ -235,6 +231,7 @@ StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
 });
 StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
+*/
 
 ~slid9 = Slider.new(~w, Rect(530,320,130,30))
 .value_(~numSustain.value())
@@ -243,7 +240,12 @@ StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
 .action_({
 	arg obj;
 	~numSustain.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
-	~globEnv.set(\levels, [0,1,~numSustain.value(),0])
+	~winenv = Env(
+			levels: [0, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numRelease.value()],
+        );
+	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
+	~reset.play;
 
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
@@ -255,7 +257,12 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 .action_({
 	arg obj;
 	~numRelease.value_(obj.value.linlin(0,1,0.00,1.00));
-	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
+	~winenv = Env(
+			levels: [0, ~numSustain.value(), 0],
+		times: [~numAttack.value(), ~numRelease.value()],
+        );
+	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
+	~reset.play;
 });
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
@@ -289,6 +296,7 @@ StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").fo
 	~granSynth.set(\grainrand , obj.value/100);
 	~granSynth.run(false);
 	~granSynth.run;
+	~reset.play;
 
 });
 
@@ -351,6 +359,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numAttack.value());
 
+/*
 ~numDecay = NumberBox.new(~w, Rect(449,320,38,28))
 .decimals_(2)
 .background_(lightsky)
@@ -358,6 +367,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0)
 .value_(~numDecay.value());
+*/
 
 ~numSustain = NumberBox.new(~w, Rect(659,320,38,28))
 .decimals_(2)
