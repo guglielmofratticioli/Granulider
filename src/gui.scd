@@ -38,8 +38,6 @@ var black = Color.fromHexString("#000000");
 
 ~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 
-//{EnvGen.kr(~winenv)}.plot(2);
-
 ~reset = {
 	if ( ~start.value == 0 ,
 		{ postln("Stopped"); ~granSynth.free; ~reset; }
@@ -216,7 +214,7 @@ StaticText.new(~slid6, Rect(10,0,80,30)).string_("Pitch").stringColor_(navy);
 //envelope
 StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).font_(Font(["Helvetica-bold"].choose,18));
 
-~slid7 = Slider.new(~w, Rect(100,320,130,30))
+~slid7 = Slider.new(~w, Rect(150,320,130,30))
 .value_(~numAttack.value())
 .background_(white)
 .thumbSize_(2)
@@ -229,24 +227,10 @@ StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).f
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 	~granSynth.set(\grainenv , ~envBuf);
-	//~reset.play;
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
-/*
-~slid8 = Slider.new(~w, Rect(320,320,130,30))
-.value_(~numDecay.value())
-.background_(white)
-.thumbSize_(2)
-.action_({
-	arg obj;
-	~numDecay.value_(obj.value.linlin(0.00,1.00,0.00,1.00));
-	~globEnv.set(\times, [~numAttack.value(), ~numDecay.value(), ~numRelease.value()]);
-});
-StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
-*/
-
-~slid9 = Slider.new(~w, Rect(530,320,130,30))
+~slid9 = Slider.new(~w, Rect(415,320,130,30))
 .value_(~numSustain.value())
 .background_(white)
 .thumbSize_(2)
@@ -259,12 +243,11 @@ StaticText.new(~slid8, Rect(35,0,80,30)).string_("Decay").stringColor_(navy);
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 	~granSynth.set(\grainenv , ~envBuf);
-	//~reset.play;
 
 });
 StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 
-~slid10 = Slider.new(~w, Rect(740,320,130,30))
+~slid10 = Slider.new(~w, Rect(680,320,130,30))
 .value_(~numRelease.value())
 .background_(white)
 .thumbSize_(2)
@@ -277,7 +260,6 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 	~granSynth.set(\grainenv , ~envBuf);
-	//~reset.play;
 });
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
@@ -312,13 +294,9 @@ StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").fo
 	arg obj;
 	~numRandomize.value_(obj.value.linlin(0,1,0,100));
 	~granSynth.set(\grainrand , obj.value);
-	/*~granSynth.run(false);
-	~granSynth.run;
-	~reset.play;*/
-
 });
 
-StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular drift").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular Drift").font_(Font(["Helvetica-bold"].choose, 14));
 
 //numboxes
 ~numVolume = NumberBox.new(~w, Rect(509,61,38,28))
@@ -337,7 +315,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numVol1 = NumberBox.new(~w, Rect(289,141,39,28))
+~numVol1 = NumberBox.new(~w, Rect(289,141,38,28))
 .value_(~numVol1.value())
 .decimals_(2)
 .background_(lightsky)
@@ -369,7 +347,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numAttack = NumberBox.new(~w, Rect(229,320,38,28))
+~numAttack = NumberBox.new(~w, Rect(279,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -377,17 +355,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numAttack.value());
 
-/*
-~numDecay = NumberBox.new(~w, Rect(449,320,38,28))
-.decimals_(2)
-.background_(lightsky)
-.normalColor_(white)
-.align_(\center)
-.scroll_step_(0)
-.value_(~numDecay.value());
-*/
-
-~numSustain = NumberBox.new(~w, Rect(659,320,38,28))
+~numSustain = NumberBox.new(~w, Rect(544,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -395,7 +363,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numSustain.value());
 
-~numRelease = NumberBox.new(~w, Rect(869,320,38,28))
+~numRelease = NumberBox.new(~w, Rect(809,320,38,28))
 .decimals_(2)
 .background_(lightsky)
 .normalColor_(white)
@@ -403,7 +371,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .scroll_step_(0)
 .value_(~numRelease.value());
 
-~numFrequency = NumberBox.new(~w, Rect(251.5,535,38,28))
+~numFrequency = NumberBox.new(~w, Rect(250,535,38,28))
 .value_(~numFrequency.value())
 .decimals_(0)
 .background_(white)
@@ -411,7 +379,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numDuration = NumberBox.new(~w, Rect(485,535,44,28))
+~numDuration = NumberBox.new(~w, Rect(480,535,44,28))
 .value_(~numDuration.value())
 .decimals_(3)
 .background_(lightsky)
@@ -419,7 +387,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular dri
 .align_(\center)
 .scroll_step_(0);
 
-~numRandomize = NumberBox.new(~w, Rect(720,535,38,28))
+~numRandomize = NumberBox.new(~w, Rect(716,535,38,28))
 .value_(~numRandomize.value())
 .decimals_(0)
 .background_(navy)
