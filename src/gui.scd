@@ -264,7 +264,7 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
 //knobs
-~knob1 = Knob.new(~w, Rect(226.5,450,80,80))
+~knob1 = Knob.new(~w, Rect(226.5,430,80,80))
 .background_(white)
 .value_(~numFrequency.value()/250)
 .color_([white,lightsky,white,lightsky])
@@ -273,9 +273,9 @@ StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 	~numFrequency.value_(obj.value.linlin(0,1,0,250));
 	~granSynth.set(\grainfreq , obj.value.linlin(0,1,0,250));
 });
-StaticText.new(~w, Rect(235.5,566,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(235.5,545,80,20)).string_("Frequency").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob2 = Knob.new(~w, Rect(459.5,450,80,80))
+~knob2 = Knob.new(~w, Rect(459.5,430,80,80))
 .background_(lightsky)
 .value_(~numDuration.value())
 .color_([lightsky,lightsky,white,white])
@@ -284,9 +284,9 @@ StaticText.new(~w, Rect(235.5,566,80,20)).string_("Frequency").font_(Font(["Helv
 	~numDuration.value_(obj.value.linlin(0.00,1.00,0.00,1));
 	~granSynth.set(\graindur , obj.value.linlin(0,1,0,1));
 });
-StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(459.5,545,80,20)).align_(\center).string_("Duration").font_(Font(["Helvetica-bold"].choose, 14));
 
-~knob3 = Knob.new(~w, Rect(692.5,450,80,80))
+~knob3 = Knob.new(~w, Rect(692.5,430,80,80))
 .background_(navy)
 .value_(~numRandomize.value())
 .color_([navy,navy,white,white])
@@ -296,7 +296,7 @@ StaticText.new(~w, Rect(459.5,566,80,20)).align_(\center).string_("Duration").fo
 	~granSynth.set(\grainrand , obj.value);
 });
 
-StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular Drift").font_(Font(["Helvetica-bold"].choose, 14));
+StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Drift").font_(Font(["Helvetica-bold"].choose, 14));
 
 //numboxes
 ~numVolume = NumberBox.new(~w, Rect(509,61,38,28))
@@ -371,7 +371,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular Dri
 .scroll_step_(0)
 .value_(~numRelease.value());
 
-~numFrequency = NumberBox.new(~w, Rect(250,535,38,28))
+~numFrequency = NumberBox.new(~w, Rect(250,515,38,28))
 .value_(~numFrequency.value())
 .decimals_(0)
 .background_(white)
@@ -379,7 +379,7 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular Dri
 .align_(\center)
 .scroll_step_(0);
 
-~numDuration = NumberBox.new(~w, Rect(480,535,44,28))
+~numDuration = NumberBox.new(~w, Rect(480,515,44,28))
 .value_(~numDuration.value())
 .decimals_(3)
 .background_(lightsky)
@@ -387,13 +387,22 @@ StaticText.new(~w, Rect(685.5,566,100,20)).align_(\center).string_("Granular Dri
 .align_(\center)
 .scroll_step_(0);
 
-~numRandomize = NumberBox.new(~w, Rect(716,535,38,28))
+~numRandomize = NumberBox.new(~w, Rect(716,515,38,28))
 .value_(~numRandomize.value())
 .decimals_(0)
 .background_(navy)
 .normalColor_(white)
 .align_(\center)
 .scroll_step_(0);
+
+// recording
+~download = Button.new(~w, Rect(460,635,80,30))
+.states_([["Record",navy,white],["Stop Rec.",navy,sky]])
+.background_(navy)
+.action_({
+	if ( ~download.value == 1 ,
+		{ postln("Record"); s.record; thisProcess.platform.recordingsDir = ~project_dir; }, {postln("stop recording"); s.stopRecording});
+});
 
 
 
