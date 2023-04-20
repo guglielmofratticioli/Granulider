@@ -23,6 +23,3 @@ s.boot;
 
 ~ui_path.load;
 
-// create an instance of the sine oscillator
-//~synth = Synth(\mySynth);
-//~synth.set(\freq,200)

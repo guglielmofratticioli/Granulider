@@ -2,7 +2,6 @@
 
 // Hex colors :
 var lightsky = Color.fromHexString("#7ca3d2");
-//var sky = Color.fromHexString("#56729a");
 var blue = Color.fromHexString("#274d83");
 var navy = Color.fromHexString("#14305f");
 var sky = Color.fromHexString("#f7efd6");
