@@ -1,26 +1,36 @@
 # A SuperCollider Grain Synth sample based 
-for CMLS project 2023 
+Computer Music: Languages and Systems
+
+Homework 1 - Group 7, LemonJuice:
+
+Guglielmo Fratticioli
+
+Chiara Lunghi
+
+Alessandra Moro
+
+Elia Pirrello
+
 # How  to run it 
-clone it with : 
+1. Clone the repository: 
 ```
 git clone https://github.com/guglielmofratticioli/Granulider.git
 ```
-open in supercollider file 
+2. Open in Supercollider the file:
 ```
 src/main.scd
 ```
 
-higlight all and run it 
+3. Boot the server
 
 
-# how to use it 
+4. Select all and run  
 
-- click START/STOP to ear sounds 
-- click on buttons to swap samples 
-- adjust Volume/Pitch of each samples, global output
-- adjust grain frequency with Knob
-- adjust grain duration with knob 
-- adjust grain Speed with Knob
-- click RECORD to record the sound
-- click STOP REC to stop the recording and save it in the project directory
+
+# Repository content:
+
+- src folder : contains the sources files ('main.scd', 'core.scd', 'gui.scd')
+- res/samples : contains 13 samples
+- Foley Sounds : contains 5 examples of created Foley sounds 
+- Report
 
