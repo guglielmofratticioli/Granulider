@@ -1,16 +1,13 @@
 # A SuperCollider Grain Synth sample based 
 Computer Music: Languages and Systems
 
-Homework 1 - Group 7, LemonJuice:
+Homework 1 - Group 7 - LemonJuice
 
-Guglielmo Fratticioli
 
-Chiara Lunghi
-
-Alessandra Moro
-
-Elia Pirrello
-
+The project involves the development of a granular synthesizer using Supercollider for sound design.
+The granular synth allows you to use a mix of two samples to generate an output made up of grains. 
+In addition to the classic controls of a granular synth, both for the samples and the grains, as well as for the output, the pitch can be varied to obtain creative variations and results. 
+The project includes an effective graphical interface for controlling the parameters.
 
 # Repository content:
 
@@ -36,12 +33,11 @@ src/main.scd
 4. Select all and run  
 
 
-# Brief description of the project
+# Group members
+Guglielmo Fratticioli
 
-The project involves the development of a granular synthesizer using Supercollider for sound design.
+Chiara Lunghi
 
-It demonstrates how granular synthesis can be used to create immersive soundscapes from completely different audio sources and how randomness 
-can be exploited in grain selection to achieve non-repetitive results. 
+Alessandra Moro
 
-Overall, the project provides valuable insights into the principles and applications of granular synthesis and demonstrates 
-the potential of Supercollider for creating complex and realistic sound designs.
+Elia Pirrello
