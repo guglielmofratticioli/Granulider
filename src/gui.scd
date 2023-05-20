@@ -1,5 +1,3 @@
-
-
 // Hex colors :
 var lightsky = Color.fromHexString("#7ca3d2");
 var blue = Color.fromHexString("#274d83");
@@ -37,6 +35,7 @@ var black = Color.fromHexString("#000000");
 
 ~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 
+
 ~reset = {
 	if ( ~start.value == 0 ,
 		{ postln("Stopped"); ~granSynth.free; ~reset; }
@@ -62,7 +61,9 @@ var black = Color.fromHexString("#000000");
 
 };
 
-~w = Window.new("Granullider", Rect(500,500,1000,700)).background_(sky);
+
+~w = Window.new("Granullider", Rect(500,500,1400,700)).background_(sky);
+
 
 // final
 ~start = Button.new(~w, Rect(290,60,80,30))
@@ -70,9 +71,24 @@ var black = Color.fromHexString("#000000");
 .background_(navy)
 .action_({
 	if ( ~start.value == 0 ,
-		{ postln("Stopped"); ~granSynth.free; ~reset; }
-		,{ postln("Started"); ~reset.play });
+		{
+			postln("Stopped");
+			~granSynth.free; ~reset;
+
+		}
+		,
+		{
+			postln("Started");
+	});
+	//Plot of the output
+	~scope = Stethoscope.new(s,1,0,4096,1.0,'audio',~view1,0);
+	Out.ar(0, SinOsc.ar(440));
+
+	~reset.play;
+
 });
+
+
 
 ~slid1 = Slider.new(~w,Rect(390,60,120,30))
 .value_(~numVolume.value())
@@ -226,6 +242,7 @@ StaticText.new(~w,Rect(460,233,80,30)).string_("Envelope").stringColor_(black).f
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 	~granSynth.set(\grainenv , ~envBuf);
+
 });
 StaticText.new(~slid7, Rect(35,0,80,30)).string_("Attack").stringColor_(navy);
 
@@ -259,6 +276,9 @@ StaticText.new(~slid9, Rect(35,0,80,30)).string_("Sustain").stringColor_(navy);
         );
 	~envBuf = Buffer.sendCollection(s, ~winenv.discretize, 1);
 	~granSynth.set(\grainenv , ~envBuf);
+
+
+
 });
 StaticText.new(~slid10, Rect(35,0,80,30)).string_("Release").stringColor_(navy);
 
@@ -354,6 +374,7 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 .scroll_step_(0)
 .value_(~numAttack.value());
 
+
 ~numSustain = NumberBox.new(~w, Rect(544,320,38,28))
 .decimals_(2)
 .background_(lightsky)
@@ -362,6 +383,7 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 .scroll_step_(0)
 .value_(~numSustain.value());
 
+
 ~numRelease = NumberBox.new(~w, Rect(809,320,38,28))
 .decimals_(2)
 .background_(lightsky)
@@ -369,6 +391,7 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 .align_(\center)
 .scroll_step_(0)
 .value_(~numRelease.value());
+
 
 ~numFrequency = NumberBox.new(~w, Rect(250,515,38,28))
 .value_(~numFrequency.value())
@@ -403,7 +426,12 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 		{ postln("Record"); s.record; thisProcess.platform.recordingsDir = ~project_dir; }, {postln("stop recording"); s.stopRecording});
 });
 
+~view1 = CompositeView(~w, Rect(1050,215,350,270));
+//~view2 = CompositeView(~w, Rect(1050,360,265,270)).background_(lightsky);
 
 
+// Open the main window
 ~w.front;
+
+
 
