@@ -62,7 +62,7 @@ var black = Color.fromHexString("#000000");
 };
 
 
-~w = Window.new("Granullider", Rect(500,500,1400,700)).background_(sky);
+~w = Window.new("Granullider", Rect(500,500,1295,650)).background_(sky);
 
 
 // final
@@ -80,10 +80,10 @@ var black = Color.fromHexString("#000000");
 		{
 			postln("Started");
 	});
-	//Plot of the output
-	~scope = Stethoscope.new(s,1,0,4096,1.0,'audio',~view1,0);
-	Out.ar(0, SinOsc.ar(440));
 
+	//Plot of the output
+	~scope = Stethoscope.new(s,1,0,4096,1.0,'audio',~view2,0);
+	Out.ar(0, SinOsc.ar(440));
 	~reset.play;
 
 });
@@ -418,7 +418,7 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 .scroll_step_(0);
 
 // recording
-~download = Button.new(~w, Rect(460,635,80,30))
+~download = Button.new(~w, Rect(985,450,245,50))
 .states_([["Record",navy,white],["Stop Rec.",navy,sky]])
 .background_(navy)
 .action_({
@@ -426,9 +426,7 @@ StaticText.new(~w, Rect(685.5,545,100,20)).align_(\center).string_("Granular Dri
 		{ postln("Record"); s.record; thisProcess.platform.recordingsDir = ~project_dir; }, {postln("stop recording"); s.stopRecording});
 });
 
-~view1 = CompositeView(~w, Rect(1050,215,350,270));
-//~view2 = CompositeView(~w, Rect(1050,360,265,270)).background_(lightsky);
-
+~view2 = CompositeView(~w,Rect(985,95,250,270));
 
 // Open the main window
 ~w.front;
