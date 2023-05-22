@@ -34,7 +34,7 @@ SynthDef(\grain_synth, {
 						    	     windowSize: 1,
 						             pitchRatio: ratio1 + WhiteNoise.ar(grainrand) )
 					       	         +
-					       	         PitchShift.ar(            // SAMPLE 1
+					       	         PitchShift.ar(            // SAMPLE 2
 		         					 in: BufRd.ar(1, sample2,
 		         						    Phasor.ar(0, BufRateScale.ir(sample2),
 									        0, BufFrames.ir(sample2),0))*gain2,
